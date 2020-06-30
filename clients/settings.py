@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from decouple import config
+from dj_database_url import parse as dburl
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -20,12 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*6rtqw$^j!(3j!ieq&jd!p2gm(lbkmzq*q0iot@20$5y*hxi5$'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG',default=False,cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['sales-tuto-django.herokuapp.com','localhost:8000']
 
 
 # Application definition
@@ -74,12 +77,9 @@ WSGI_APPLICATION = 'clients.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+default_dburl = 'sqlite:///' + os.path.join(BASE_DIR,'db.sqlite3')
+
+DATABASES = {'default':config('DATABASE_URL',default=default_dburl,cast=dburl),}
 
 
 # Password validation
@@ -131,3 +131,5 @@ MEDIA_ROOT = 'mymedia'
 LOGIN_URL = 'login'
 
 LOGIN_REDIRECT_URL = 'client_list'
+
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
