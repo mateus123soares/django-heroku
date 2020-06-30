@@ -1,0 +1,28 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Teste page</h1>
+    <b><a href="www.programefacil.com.br">Teste {{total}}</a> </b>
+
+    {% if p_flat %}
+        <ul>
+            {% for person in people %}
+                <li>{{person}}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h2>People will not be shown</h2>
+    {% endif %}
+
+
+</body>
+</html>
